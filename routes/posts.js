@@ -4,8 +4,10 @@ var events = require('events');
 var winston = require('winston');
 
 function ensureAuthenticate(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  winston.log('info', 'login by ' + req.user.username);
+  if (req.isAuthenticated()) { 
+      winston.log('info', 'login by ' + req.user.username);
+      return next(); 
+    }
   res.redirect('/login/facebook');
 }
 
