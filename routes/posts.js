@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var events = require('events');
+var winston = require('winston');
 
 function ensureAuthenticate(req, res, next) {
   if (req.isAuthenticated()) {
