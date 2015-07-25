@@ -21,6 +21,29 @@ var account = require('./routes/account');
 
 var app = express();
 
+if (cluster.isMaster) {
+  // Fork workers.
+  cluster.fork(); 
+
+  cluster.on('fork', function(worker) {
+    console.log("fork a worker");
+    app.listen(3001);
+  });
+
+  cluster.on('online', function(worker) {
+    console.log("worker " + worker.process.pid + " is running");
+  });
+
+  cluster.on('listening', function(worker, address) {
+    console.log("A worker is now connected to " + address.address + ":" + address.port);
+  });
+
+  cluster.on('exit', function(worker, code, signal) {
+    console.log("worker " + worker.process.pid + " died");
+//    cluster.fork();
+  });
+}
+
 // setup logger for express
 
 winston.add(winston.transports.File, { 
