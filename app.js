@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var winston = require('winston');
+var cors = require('cors');
 
 var passport = require('passport')
   , FacebookStrategy = require('passport-facebook').Strategy;
@@ -19,6 +20,13 @@ var account = require('./routes/account');
 var app = express();
 
 // setup logger for express
+
+winston.add(winston.transports.File, { 
+  name: 'booklog3-error',
+  filename: 'booklog3-error.log',
+  level: 'error'
+});
+
 winston.add(winston.transports.File, { 
   name: 'booklog3',
   filename: 'booklog-info.log',
@@ -27,7 +35,7 @@ winston.add(winston.transports.File, {
 
 mongoose.connect('mongodb://booklog3:123456@ds053130.mongolab.com:53130/booklog3');
 mongoose.connection.on('error', function() {
-  winston.log('info', 'MongoDB: error');
+  winston.log('error', 'MongoDB: error');
 });
 mongoose.connection.on('open', function() {
   winston.log('info', 'MongoDB: connected');
@@ -55,7 +63,6 @@ app.db = {
   model: {
     Post: Post,
     User: User,
-    Winston : winston
   }
 };
 
@@ -71,6 +78,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'booklog store' }));
+
+app.use(cors());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -114,10 +123,10 @@ app.use('/', posts);
 app.use('/users', users);
 app.use('/account', account);
 
-app.get('/login/facebook',
+app.get('/login/facebook', cors(), 
   passport.authenticate('facebook'));
 
-app.get('/auth/facebook/callback',
+app.get('/auth/facebook/callback', cors(), 
   passport.authenticate('facebook', { failureRedirect: '/login/fail' }),
   function(req, res) {
     // Successful authentication, redirect home.
