@@ -16,6 +16,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
 var account = require('./routes/account');
+var chat = require('./routes/chat');
 
 var app = express();
 
@@ -132,6 +133,10 @@ app.get('/auth/facebook/callback', cors(),
     // Successful authentication, redirect home.
     res.redirect('/account/profile');
   });
+
+//chat
+app.get('/start', cors(), chat.start);
+app.post('/send/:message', cors(), chat.send);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
