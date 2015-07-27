@@ -14,6 +14,7 @@ var passport = require('passport')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var chat = require('./routes/chat');
 var posts = require('./routes/posts');
 var account = require('./routes/account');
 
@@ -120,9 +121,11 @@ passport.use(new FacebookStrategy({
 app.use(cors());  
 
 app.use('/', routes);
+app.use('/', chat);
 app.use('/', posts);
 app.use('/users', users);
 app.use('/account', account);
+
 
 app.get('/login/facebook', 
   passport.authenticate('facebook'));
