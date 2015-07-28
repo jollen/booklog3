@@ -3,55 +3,46 @@ var router = express.Router();
 var events = require('events');
 var winston = require('winston');
 
-/*
+var history = [];
+
 router.get('/start', function(req, res, next) {
   var workflow = new events.EventEmitter();  
 
   workflow.outcome = {
       success: false,
-      errfor: {}
+      errfor: {},
+      message: {}
   };
-
-  workflow.on('validation', function() {
-    console.log('va');
-
-    workflow.emit('start');
-  });
 
   workflow.on('start', function() {
     console.log('start');
 
-    this.render('chat', function(err, html){
-      if(err) workflow.outcome.errfor = err;
-
-      console.log('render');
-    });
-
     workflow.outcome.success = true;
+    workflow.outcome.message.data = history;
     workflow.emit('response');
   });
 
   workflow.on('response', function() {
     console.log('response');
 
-    res.send(workflow.outcome);
+    res.send(workflow.outcome.message);
   });
   
-  workflow.emit('validation');
+  workflow.emit('start');
 });
-*/
 
 
 router.post('/send/:message', function(req, res, next) {
   var workflow = new events.EventEmitter();
   var clients = req.app.clients;
   var msg = req.params.message;
-  console.log(msg);
+  var obj = {};
+  var milliseconds = new Date().getTime();
 
   workflow.outcome = {
       success: false,
       errfor: {},
-      data: []
+      message: {}
   };
 
   workflow.on('validation', function() {
@@ -68,10 +59,14 @@ router.post('/send/:message', function(req, res, next) {
     console.log('ready to boardcast "' + msg + ' "');
 
     workflow.outcome.success = true;
-    workflow.outcome.data.push(msg);
+    obj.message = msg;
+    obj.timestamp = milliseconds;
+    history.push(obj);
+    workflow.outcome.message.type = 'message';
+    workflow.outcome.message.data = history;
 
     clients.forEach(function(client) {
-       client.sendUTF(JSON.stringify(workflow.outcome.data));
+       client.sendUTF(JSON.stringify(workflow.outcome.message));
     });
 
     workflow.emit('response');
