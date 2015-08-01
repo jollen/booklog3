@@ -15,6 +15,7 @@ var passport = require('passport')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
+var chat = require('./routes/chat');
 var account = require('./routes/account');
 
 var app = express();
@@ -121,6 +122,7 @@ app.use(cors());
 
 app.use('/', routes);
 app.use('/', posts);
+app.use('/', chat);
 app.use('/users', users);
 app.use('/account', account);
 
