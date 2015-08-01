@@ -137,7 +137,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login/fail' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/booklog/');
+    res.redirect('/');
   });
 
 // catch 404 and forward to error handler
