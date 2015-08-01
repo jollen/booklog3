@@ -53,7 +53,44 @@ if (cluster.isMaster) {
   server.on('error', onError);
   server.on('listening', onListening);
 
+<<<<<<< HEAD
   wsServer.on('request', onWsRequest);
+=======
+  /*
+   *  WebSocket Section
+   */
+  var wsServer = new WebSocketServer({
+    httpServer: server,
+    autoAcceptConnections: false
+  }); 
+
+  // create WebSocket connections array
+  app.clients = [];
+
+  function onWsConnMessage(message) {
+    if (message.type == 'utf8') {
+      console.log('Received message: ' + message.utf8Data);
+    } else if (message.type == 'binary') {
+      console.log('Received binary data.');
+    }
+  }
+
+  function onWsConnClose(reasonCode, description) {
+    console.log(' Peer disconnected with reason: ' + reasonCode);
+  }
+
+  function onWsRequest(request) {
+    var connection = request.accept('echo-protocol', request.origin);
+    console.log("WebSocket connection accepted.");
+      
+    app.clients.push(connection);
+
+    connection.on('message', onWsConnMessage);
+    connection.on('close', onWsConnClose);
+  }
+
+  wsServer.on('request', onWsRequest); 
+>>>>>>> upstream/master
 }
 
 

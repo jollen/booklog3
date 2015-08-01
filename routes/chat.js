@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var events = require('events');
+<<<<<<< HEAD
 var winston = require('winston');
 
 var history = [];
@@ -69,16 +70,58 @@ router.post('/send/:message', function(req, res, next) {
        client.sendUTF(JSON.stringify(workflow.outcome.message));
     });
 
+=======
+
+var history = [];
+
+router.post('/send/:message', function(req, res, next) {
+  var workflow = new events.EventEmitter();  
+  var clients = req.app.clients;
+
+  workflow.outcome = {
+      success: false,
+      errfor: {}
+  };
+
+  workflow.on('validation', function() {
+    history.push({
+      message: req.params.message,
+      timestamp: new Date().getTime()
+    });
+    workflow.emit('broadcast');
+  });
+
+  workflow.on('broadcast', function() {
+    for (i = 0; i < clients.length; i++) {
+      var client = clients[i];
+      var data = {
+        type: 'message',
+        data: history
+      };
+
+      console.log(data);
+      client.sendUTF(JSON.stringify(data));
+    };
+
+    workflow.outcome.success = true;
+>>>>>>> upstream/master
     workflow.emit('response');
   });
 
   workflow.on('response', function() {
+<<<<<<< HEAD
     console.log(workflow.outcome);
     res.send(workflow.outcome);
+=======
+      res.send(workflow.outcome);
+>>>>>>> upstream/master
   });
   
   workflow.emit('validation');
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 module.exports = router;

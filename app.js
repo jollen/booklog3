@@ -9,13 +9,17 @@ var session = require('express-session');
 var winston = require('winston');
 var cors = require('cors');
 
+var chat = require('./routes/chats');
+
 var passport = require('passport')
   , FacebookStrategy = require('passport-facebook').Strategy;
 
 var routes = require('./routes/index');
+var chats = require('./routes/chats');
 var users = require('./routes/users');
 var chat = require('./routes/chat');
 var posts = require('./routes/posts');
+var chat = require('./routes/chat');
 var account = require('./routes/account');
 
 var app = express();
@@ -123,6 +127,7 @@ app.use(cors());
 app.use('/', routes);
 app.use('/', chat);
 app.use('/', posts);
+app.use('/', chats);
 app.use('/users', users);
 app.use('/account', account);
 
@@ -134,7 +139,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login/fail' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('http://jollen.github.io/booklog/');
+    res.redirect('/');
   });
 
 // catch 404 and forward to error handler
