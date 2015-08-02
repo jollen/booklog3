@@ -95,7 +95,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: '410866279063864',
     clientSecret: '3887b8914b81d0e778d3b9af10775fb6',
-    callbackURL: "/auth/facebook/callback"
+    callbackURL: "http://alwaysladylove.com/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     app.db.model.User.findOne({"facebook._json.id": profile._json.id}, function(err, user) {
@@ -136,7 +136,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('http://alwaysladylove.com/');
+    res.redirect('/');
   });
 
 // catch 404 and forward to error handler
