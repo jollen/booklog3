@@ -133,10 +133,10 @@ app.get('/login/facebook',
   passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/login/fail' }),
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect('http://alwaysladylove.com/');
   });
 
 // catch 404 and forward to error handler
