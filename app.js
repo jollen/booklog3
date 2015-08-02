@@ -37,7 +37,7 @@ winston.add(winston.transports.File, {
   level: 'info'
 });
 
-mongoose.connect('mongodb://booklog3:123456@ds053130.mongolab.com:53130/booklog3');
+mongoose.connect('mongodb://booklog3:123456@ds047622.mongolab.com:47622/booklog3');
 mongoose.connection.on('error', function() {
   winston.log('error', 'MongoDB: error');
 });

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var events = require('events');
 var winston = require('winston');
+var cors = require('cors');
 
 winston.add(winston.transports.File, { 
   name: 'booklog3-1',
