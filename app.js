@@ -17,9 +17,7 @@ var passport = require('passport')
 var routes = require('./routes/index');
 var chats = require('./routes/chats');
 var users = require('./routes/users');
-var chat = require('./routes/chat');
 var posts = require('./routes/posts');
-var chat = require('./routes/chat');
 var account = require('./routes/account');
 
 var app = express();
@@ -95,8 +93,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-    clientID: '1559480364270197',
-    clientSecret: '4d5d1e9389c179142348cbb7044bdab1',
+    clientID: '410866279063864',
+    clientSecret: '3887b8914b81d0e778d3b9af10775fb6',
     callbackURL: "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -125,7 +123,6 @@ passport.use(new FacebookStrategy({
 app.use(cors());  
 
 app.use('/', routes);
-app.use('/', chat);
 app.use('/', posts);
 app.use('/', chats);
 app.use('/users', users);
