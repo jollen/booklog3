@@ -53,9 +53,8 @@ if (cluster.isMaster) {
   server.on('error', onError);
   server.on('listening', onListening);
 
-<<<<<<< HEAD
   wsServer.on('request', onWsRequest);
-=======
+
   /*
    *  WebSocket Section
    */
@@ -90,7 +89,6 @@ if (cluster.isMaster) {
   }
 
   wsServer.on('request', onWsRequest); 
->>>>>>> upstream/master
 }
 
 
