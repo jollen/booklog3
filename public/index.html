@@ -24,6 +24,7 @@
             <img class="img-responsive dp img-circle" src="http://lorempixel.com/180/180/">
         </a>
 	        <h4 class="media-heading"><%= post.title %></h4>
+            <h6><%= post.timeCreated %></h6>
 	        <button id="subject" data-id="<%= post._id %>" class="btn btn-success">Read More</button>
     </div>
     <% }); %>
@@ -32,6 +33,7 @@
 <script id='post-single' type='text/template'>
     <div class="col-md-12 portfolio-item">
             <h2 class="media-heading"><%= title %></h2>
+            <h6><%= timeCreated %></h6>
             <h4><%= content %></h4>
     </div>
 </script>

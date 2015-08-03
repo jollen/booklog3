@@ -111,6 +111,7 @@ router.delete('/1/post/:id', function(req, res, next) {
 router.put('/1/post/:id', function(req, res, next) {
   var fieldsToSet = {
   	title: req.query.title,
+    time: req.query.timeCreated,
   	content: req.query.content
   };
 
