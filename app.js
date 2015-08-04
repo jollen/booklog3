@@ -15,10 +15,10 @@ var passport = require('passport')
   , FacebookStrategy = require('passport-facebook').Strategy;
 
 var routes = require('./routes/index');
+var login = require('./routes/login');
 var chats = require('./routes/chats');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
-var chat = require('./routes/chat');
 var account = require('./routes/account');
 
 var app = express();
@@ -36,7 +36,7 @@ winston.add(winston.transports.File, {
   level: 'info'
 });
 
-mongoose.connect('mongodb://booklog3:123456@ds053130.mongolab.com:53130/booklog3');
+mongoose.connect('mongodb://booklog3:123456@ds047622.mongolab.com:47622/booklog3');
 mongoose.connection.on('error', function() {
   winston.log('error', 'MongoDB: error');
 });
@@ -94,8 +94,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-    clientID: '1559480364270197',
-    clientSecret: '4d5d1e9389c179142348cbb7044bdab1',
+    clientID: '410866279063864',
+    clientSecret: '3887b8914b81d0e778d3b9af10775fb6',
+//    callbackURL: "http://alwaysladylove.com/auth/facebook/callback"
     callbackURL: "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -124,21 +125,12 @@ passport.use(new FacebookStrategy({
 app.use(cors());  
 
 app.use('/', routes);
+app.use('/', login);
 app.use('/', posts);
 app.use('/', chats);
 app.use('/users', users);
 app.use('/account', account);
 
-
-app.get('/login/facebook', 
-  passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/login/fail' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

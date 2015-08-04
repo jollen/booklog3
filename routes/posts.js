@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var events = require('events');
 var winston = require('winston');
+var cors = require('cors');
 
 winston.add(winston.transports.File, { 
   name: 'booklog3-1',
@@ -110,6 +111,7 @@ router.delete('/1/post/:id', function(req, res, next) {
 router.put('/1/post/:id', function(req, res, next) {
   var fieldsToSet = {
   	title: req.query.title,
+    time: req.query.timeCreated,
   	content: req.query.content
   };
 
