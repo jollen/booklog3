@@ -15,6 +15,7 @@ var passport = require('passport')
   , FacebookStrategy = require('passport-facebook').Strategy;
 
 var routes = require('./routes/index');
+var login = require('./routes/login');
 var chats = require('./routes/chats');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
@@ -124,21 +125,12 @@ passport.use(new FacebookStrategy({
 app.use(cors());  
 
 app.use('/', routes);
+app.use('/', login);
 app.use('/', posts);
 app.use('/', chats);
 app.use('/users', users);
 app.use('/account', account);
 
-
-app.get('/login/facebook', 
-  passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
