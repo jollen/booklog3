@@ -58,6 +58,7 @@ function onWsConnMessage(message) {
   } else if (message.type == 'binary') {
     console.log('Received binary data.');
   }
+
 }
 
 function onWsConnClose(reasonCode, description) {

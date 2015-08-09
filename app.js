@@ -9,13 +9,20 @@ var session = require('express-session');
 var winston = require('winston');
 var cors = require('cors');
 
+var chat = require('./routes/chats');
+
 var passport = require('passport')
   , FacebookStrategy = require('passport-facebook').Strategy;
 
 var routes = require('./routes/index');
+var chats = require('./routes/chats');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
+<<<<<<< HEAD
 var chats = require('./routes/chats');
+=======
+var chat = require('./routes/chat');
+>>>>>>> 97b8db3857ab1243466eb37183f32bd10eb27240
 var account = require('./routes/account');
 
 
@@ -137,6 +144,7 @@ app.use('/', posts);
 app.use('/users', users);
 app.use('/account', account);
 
+
 app.get('/login/facebook', 
   passport.authenticate('facebook'));
 
@@ -144,7 +152,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login/fail' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('http://cooliotseng.github.io/booklog/');
+    res.redirect('/');
   });
 
 // catch 404 and forward to error handler
