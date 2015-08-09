@@ -64,6 +64,7 @@ router.post('/1/post', function(req, res, next) {
   };
 
   workflow.on('validation', function() {
+    console.log('validation');
     if (req.body.title.length === 0) 
         workflow.outcome.errfor.title = '這是必填欄位';
   
@@ -80,12 +81,17 @@ router.post('/1/post', function(req, res, next) {
   });
 
   workflow.on('savePost', function() {
+    console.log('savePost');
+
+    console.log(req.body.title);
+    console.log(req.body.content);
+    console.log(req.user._id);
     var doc = new Post({
       title: req.body.title,
       content: req.body.content,
       userId: req.user._id
     });
-  
+   console.log(doc);
     doc.save(function(err, post) {
       workflow.outcome.success = true;
       workflow.outcome.post = post;
@@ -95,6 +101,7 @@ router.post('/1/post', function(req, res, next) {
   });
 
   workflow.on('response', function() {
+     console.log('response');
       res.send(workflow.outcome);
   });
   

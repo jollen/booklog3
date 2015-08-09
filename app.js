@@ -15,7 +15,12 @@ var passport = require('passport')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
+var chats = require('./routes/chats');
 var account = require('./routes/account');
+
+
+var FACEBOOK_APP_ID = '1642519462628432';
+var FACEBOOK_APP_SECRET = 'd23c138379aa8b938ed6d53310d65c07';
 
 var app = express();
 
@@ -90,8 +95,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-    clientID: '1559480364270197',
-    clientSecret: '4d5d1e9389c179142348cbb7044bdab1',
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET,
     callbackURL: "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -116,16 +121,18 @@ passport.use(new FacebookStrategy({
   }
 )); 
 
-
+/*
 var corsOptions = {
-  origin: 'http://example.com'
+  origin: 'http://cooliotseng.github.io'
 };
-
+*/
 
 // cors
-app.use(cors(corsOptions));  
+//app.use(cors(corsOptions)); 
+app.use(cors());  
 
 app.use('/', routes);
+app.use('/', chats);
 app.use('/', posts);
 app.use('/users', users);
 app.use('/account', account);
@@ -137,7 +144,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login/fail' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('http://jollen.github.io/booklog/');
+    res.redirect('http://cooliotseng.github.io/booklog/');
   });
 
 // catch 404 and forward to error handler
