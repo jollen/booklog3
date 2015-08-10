@@ -18,13 +18,8 @@ var routes = require('./routes/index');
 var chats = require('./routes/chats');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
-<<<<<<< HEAD
 var chats = require('./routes/chats');
-=======
-var chat = require('./routes/chat');
->>>>>>> 97b8db3857ab1243466eb37183f32bd10eb27240
 var account = require('./routes/account');
-
 
 var FACEBOOK_APP_ID = '1642519462628432';
 var FACEBOOK_APP_SECRET = 'd23c138379aa8b938ed6d53310d65c07';
