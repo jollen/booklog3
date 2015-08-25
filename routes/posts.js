@@ -14,8 +14,11 @@ winston.add(winston.transports.File, {
 function ensureAuthenticate(req, res, next) {
   if (req.isAuthenticated()) {
   winston.log('info', req.user.displayName);
-  return next(); }
-  res.redirect('/login/facebook');
+  return next(); 
+  }
+  
+  console.log('im not login');
+  res.redirect('/login');
 }
 
 router.get('/1/post', function(req, res, next) {
@@ -49,13 +52,14 @@ router.get('/1/post', function(req, res, next) {
   workflow.emit('validation');
 });
 
-router.get('/1/post/:id', function(req, res, next) {
+router.get('/1/post/:id', ensureAuthenticate, function(req, res, next) {
+  console.log('roger');
   req.app.db.model.Post.findById(req.params.id, function(err, posts) {
   	res.json(posts);
   });
 });
 
-router.post('/1/post', function(req, res, next) {
+router.post('/1/post', ensureAuthenticate, function(req, res, next) {
   var workflow = new events.EventEmitter();  
   var Post = req.app.db.model.Post;
 
@@ -111,7 +115,6 @@ router.delete('/1/post/:id', function(req, res, next) {
 router.put('/1/post/:id', function(req, res, next) {
   var fieldsToSet = {
   	title: req.query.title,
-    time: req.query.timeCreated,
   	content: req.query.content
   };
 

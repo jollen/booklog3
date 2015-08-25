@@ -32,9 +32,23 @@
 
 <script id='post-single' type='text/template'>
     <div class="col-md-12 portfolio-item">
-            <h2 class="media-heading"><%= title %></h2>
-            <h6><%= timeCreated %></h6>
-            <h4><%= content %></h4>
+        <h2 class="media-heading"><%= title %></h2>
+        <h6><%= timeCreated %></h6>
+        <h4><%= content %></h4>
+    </div>
+</script>
+
+<script id='tmpl-login' type='text/template'>
+    <div class="col-md-4 portfolio-item">
+        <a href="http://localhost:3000/login/facebook">
+            <img src="https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_facebook_box_blue.png"/>
+        </a>
+        <a href="">
+            <img src="https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_twitter_box_white.png"/>
+        </a>
+        <a href="">
+            <img src="https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_google_box.png"/>
+        </a>
     </div>
 </script>
 
@@ -60,11 +74,48 @@
                     <li><a href="#contact">張貼文章</a>
                     </li>
                 </ul>
+                <ul class='nav navbar-nav navbar-right'>
+                    <li><a href='/login'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>
+                    <!-- Trigger the modal with a button -->
+                    <li><button type='button' class='btn btn-default btn-lg'  id='op-modal'><span class="glyphicon glyphicon-log-in"></span> Login</button></li>
+                </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
+
+    <div class="container">
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+                <span>Choose one you love</span><br>
+                <a href="http://localhost:3000/login/facebook">
+                    <img src="https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_facebook_box_blue.png"/>
+                </a>
+                <a href="">
+                    <img src="https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_twitter_box_white.png"/>
+                </a>
+                <a href="">
+            <img src="https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_google_box.png"/>
+        </a>            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
 
     <div class="container">
 

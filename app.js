@@ -96,8 +96,8 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: '410866279063864',
     clientSecret: '3887b8914b81d0e778d3b9af10775fb6',
-    callbackURL: "http://alwaysladylove.com/auth/facebook/callback"
-//    callbackURL: "/auth/facebook/callback"
+//    callbackURL: "http://alwaysladylove.com/auth/facebook/callback"
+    callbackURL: "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     app.db.model.User.findOne({"facebook._json.id": profile._json.id}, function(err, user) {
@@ -114,7 +114,6 @@ passport.use(new FacebookStrategy({
     
             user = doc;
          }
-         console.log(user);
     
          return done(null, user); // verify callback                                         
     });

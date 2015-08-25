@@ -16,7 +16,8 @@ router.get('/auth/facebook/callback',
   });
 
 router.get('/login', function(req, res, next){
-  res.render('login', { title: 'Login', message: 'Welcome to here!'});
+  res.render('login', { title: 'Login', message: 'choose one you love!'});
 });
+
 
 module.exports = router;

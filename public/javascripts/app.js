@@ -9,8 +9,8 @@ var app = app || {};
 **/
 app.Message = Backbone.Model.extend({
     url: function() {
-         return 'http://alwaysladylove.com/1/post' 
-//         return 'http://localhost:3000/1/post' 
+//         return 'http://alwaysladylove.com/1/post' 
+         return 'http://localhost:3000/1/post' 
                     + ( this.id === null ? '' : '/' + this.id );
     },
     id: null,
@@ -23,6 +23,7 @@ app.Message = Backbone.Model.extend({
     }
 });
 
+
 /**
 * VIEWS
 **/
@@ -34,6 +35,7 @@ app.ContentView = Backbone.View.extend({
     // constructor
     initialize: function() {
         this.model = new app.Message();
+        this.model.bind('sync', this.render, this);
         this.model.bind('change', this.render, this);
         this.template = _.template($('#post-list').html());
 
@@ -78,7 +80,22 @@ app.FormView = Backbone.View.extend({
     }
 });
 
+app.LoginView = Backbone.View.extend({
+    el: 'body',
+    events: {
+        'click #op-modal': 'modal'
+    },
+    render: function(){
+        this.$('#myModal').modal();
+    },
+    modal: function(e){
+        this.render();
+    }
+});
+
+
 $(document).ready(function(){
     app.contentView = new app.ContentView();
     app.formView = new app.FormView();
+    app.loginView = new app.LoginView();
 });

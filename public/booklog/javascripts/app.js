@@ -77,7 +77,15 @@ app.FormView = Backbone.View.extend({
     }
 });
 
+app.LoginView = Backbone.View.extend({
+    el: '#myModal',
+    render: function(){
+        this.modal();
+    }
+});
+
 $(document).ready(function(){
     app.contentView = new app.ContentView();
     app.formView = new app.FormView();
+    app.loginView = new app.LoginView();
 });

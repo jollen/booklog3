@@ -1,12 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  h4 choose your account
-  div.row
-    a(href='http://alwaysladylove.com/login/facebook')
-      img(src='https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_facebook_box_blue.png')
-    a(href='')
-      img(src='https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_twitter_box_white.png')
-    a(href='')
-      img(src='https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_google_box.png')
+    h1= title
+    h4= message
+    div.row
+      a(href='http://localhost:3000/login/facebook')
+        img(src='https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_facebook_box_blue.png')
+      a(href='')
+        img(src='https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_twitter_box_white.png')
+      a(href='')
+        img(src='https://cdn0.iconfinder.com/data/icons/yooicons_set01_socialbookmarks/128/social_google_box.png')
+
+  script(src='javascripts/jquery.min.js')
+  script(src='javascripts/bootstrap.min.js')
+  script(src='vendor/underscore/underscore-min.js')
+  script(src='vendor/backbone/backbone-min.js')
+  script(src='javascripts/app.js')
