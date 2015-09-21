@@ -20,6 +20,7 @@ var chats = require('./routes/chats');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
 var account = require('./routes/account');
+var learn = require('./routes/learn');
 
 var app = express();
 
@@ -45,8 +46,8 @@ mongoose.connection.on('open', function() {
 });
 
 var postSchema = new mongoose.Schema({
-  title  :  { type: String },
-  content   :  { type: String },
+  title:  { type: String },
+  content:  { type: String },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
   timeCreated: { type: Date, default: Date.now }
 });
@@ -59,13 +60,21 @@ var userSchema = new mongoose.Schema({
   facebook: { type: Object, select: false }
 });
 
+var lessonSchema = new mongoose.Schema({
+  lessonName: { type: String, unique: true },
+  lessonLearn: { type: String, unique: true },
+  timeCreated: { type: Date, default: Date.now } 
+});
+
 var Post = mongoose.model('post', postSchema);
 var User = mongoose.model('user', userSchema);
+var Learn = mongoose.model('learn', lessonSchema);
 
 app.db = {
   model: {
     Post: Post,
     User: User,
+    Learn: Learn
   }
 };
 
@@ -129,6 +138,7 @@ app.use('/', posts);
 app.use('/', chats);
 app.use('/users', users);
 app.use('/account', account);
+app.use('/learn', learn);
 
 
 // catch 404 and forward to error handler

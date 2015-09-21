@@ -14,6 +14,7 @@ app.Message = Backbone.Model.extend({
                     + ( this.id === null ? '' : '/' + this.id );
     },
     id: null,
+    idAttribute: '_id',
     defaults: {
         success: false,
         errfor: {},
@@ -23,14 +24,14 @@ app.Message = Backbone.Model.extend({
     }
 });
 
-
 /**
 * VIEWS
 **/
 app.ContentView = Backbone.View.extend({
     el: '#content',
     events: {
-        'click #subject': 'read'
+        'click #subject': 'read',
+        'click #delete': 'delete'
     },
     // constructor
     initialize: function() {
@@ -51,6 +52,19 @@ app.ContentView = Backbone.View.extend({
         this.model.id = id;
         this.template = _.template($('#post-single').html());
         this.model.fetch();
+    },
+    delete: function(evt){
+        var self = this
+
+        this.model.destroy({
+            success: function(model, res){
+                console.log('its deleted!');
+                self.model.fetch();
+            },
+            error: function(model, res){
+                console.log('delete error');
+            }
+    });
     }
 });
 

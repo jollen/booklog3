@@ -18,6 +18,7 @@ function ensureAuthenticate(req, res, next) {
   }
   
   console.log('im not login');
+
   res.redirect('/login');
 }
 
@@ -55,7 +56,7 @@ router.get('/1/post', function(req, res, next) {
 router.get('/1/post/:id', ensureAuthenticate, function(req, res, next) {
   console.log('roger');
   req.app.db.model.Post.findById(req.params.id, function(err, posts) {
-  	res.json(posts);
+    res.json(posts);
   });
 });
 
@@ -107,19 +108,47 @@ router.post('/1/post', ensureAuthenticate, function(req, res, next) {
 });
 
 router.delete('/1/post/:id', function(req, res, next) {
-  req.app.db.model.Post.findByIdAndRemove(req.params.id, function(err, posts) {
-  	res.json(posts);
+  var workflow = new events.EventEmitter();
+  var Post = req.app.db.model.Post;
+
+  workflow.outcome = {
+    success: false,
+    errfor: {}
+  };
+
+  workflow.on('validation', function(){
+    Post.findById(req.params.id, function(err, post){
+      if(post === "undefined") {
+        workflow.outcome.errfor = "Article is't being found!";
+        return workflow.emit('response');
+      }
+
+      workflow.emit('delete');
+    });
   });
+
+  workflow.on('delete', function(){
+    Post.findByIdAndRemove(req.params.id, function(err, posts) {
+      workflow.outcome.success = true;
+      workflow.emit('response');
+    });    
+  });
+
+  workflow.on('response', function(){
+    res.send(workflow.outcome);
+  });
+
+  workflow.emit('validation');
 });
 
 router.put('/1/post/:id', function(req, res, next) {
   var fieldsToSet = {
-  	title: req.query.title,
-  	content: req.query.content
+    title: req.query.title,
+    content: req.query.content
   };
 
   req.app.db.model.Post.findOneAndUpdate({_id: req.params.id}, fieldsToSet, function(err, post) {
-  	res.json(post);
+    res.json(post);
   });
 });
 

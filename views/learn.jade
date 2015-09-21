@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .row
+    .col-md-6.col-sm-6
+      h2 To Learn list
+      div#tolearnlist
+    .col-md-6.col-sm-6
+      h2 Lesson Info
+      div#lessoninfo
+
+  script(type='text/template', id='tmpl-tolearnlist')
+    br
+    br
+    ul
+      <% _.each(lessons, function(lesson){ %>
+      li
+        a(href='#') <%= lesson.lessonName %>
+      <% }) %>
+  
+  script(type='text/template', id='tmpl-lessonlearn')
+    br
+    br
+    div.well.non-editable
+      .row
+        h2 <%= lesson.lessonName %>
+        h6 created on <%= lesson.createdTime %>
+        p <%= lesson.lessonlearn %>
+        button.btn.btn-primary.pull-right.btn.edit Edit
+
+    div.well.editable.hide
+      .row
+        form
+          div.control-group
+            label Lesson Name:
+            div.controls
+              input.form-control(type='text', name='lessonname', value!='<%= lesson.lessonName %>')
+          br
+          div
+            button.btn.btn-large.btn-info.btn.save('type=button') Save
+            button.btn.btn-large.btn-info.btn.cancel('type=button') Cancel
+            
+  script(src='javascripts/jquery.min.js')
+  script(src='javascripts/bootstrap.min.js')
+  script(src='vendor/underscore/underscore-min.js')
+  script(src='vendor/backbone/backbone-min.js')
+  script(src='tolearn.js', type='text/javascript')
